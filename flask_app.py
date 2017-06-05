@@ -2,6 +2,7 @@ from flask import Flask, request, send_from_directory, redirect, render_template
 from twilio.twiml.messaging_response import MessagingResponse, Message
 from twilio.rest import Client
 from datetime import date
+from datetime import timedelta
 
 # Your Account SID from twilio.com/console
 account_sid = "<SECRET>"
@@ -13,12 +14,14 @@ app = Flask(__name__, static_url_path='')
 
 @app.route('/')
 def index():
-    return redirect("index.html", code=302)
+    return redirect("/html/index.html", code=302)
 
 @app.route('/messages')
 def hello_world():
     res = []
-    all_messages = client.messages.list(date_sent=date(2017,6,5)) + client.messages.list(date_sent=date(2017,6,4))
+    today = date.today()
+    tomorrow = today + timedelta(days=1)
+    all_messages = client.messages.list(date_sent=today) + client.messages.list(date_sent=tomorrow)
     for message in reversed(all_messages):
         if message.direction == 'inbound':
             res.append(message.body)
