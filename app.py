@@ -6,8 +6,8 @@ from datetime import date
 #import redis
 
 # Your Account SID from twilio.com/console
-account_sid = "AC27e50fc57df31be59429829bd5b25781"
-auth_token  = "65d8acb874b79d713b3c18b7d6a5d38a"
+account_sid = "<SECRET_SID>"
+auth_token  = "<SECRET_TOKEN>"
 client = Client(account_sid, auth_token)
 
 # set the project root directory as the static folder, you can set others.
