@@ -34,6 +34,7 @@
             console.log('called');
             var divContent = "";
             var messagesArray = data.messages;
+            messagesArray.splice(0, 0, 'Send a text to (201)500-1818 and it\'ll appear here');
             var arrayLength = messagesArray.length;
 			for (var i = 0; i < arrayLength; i++) {
 				if (i % 2 == 0) {
