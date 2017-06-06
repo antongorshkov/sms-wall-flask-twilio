@@ -2,6 +2,20 @@
 <head>
 <style type="text/css">
 	@import url('https://fonts.googleapis.com/css?family=Asap');
+
+	html, body {
+	    height: 100%;
+	}
+	.wrapper {
+	    min-height: 100%;
+	    height: auto !important;
+	    height: 100%;
+	    margin: 0 auto -142px; /* the bottom margin is the negative value of the footer's height */
+	}
+	.footer, .push {
+	    height: 142px; /* .push must be the same height as .footer */
+	}
+
 	.messages {
 		ZZborder: 1px solid lightgrey;
 		margin-bottom: 5px;
@@ -10,6 +24,20 @@
 		text-align: center;
 		font-size: 25pt;
 		font-family: 'Asap', sans-serif;
+	}
+
+	.screen-footer h4{
+		font-family: 'Asap', sans-serif;
+		background: #2575BB;
+		color: #FFFFFF;
+		padding-top:25px;
+		padding-bottom: 25px;
+		font-size:32px;
+		padding-left:30px;
+		padding-right: 30px;
+		line-height: 1.5;
+		text-align: center;
+		margin: 0;
 	}
 
 	#over img {
@@ -22,11 +50,21 @@
 </head>
 <body style="background-color:#F2F2F2">
 
-<div id="over" Zstyle="position:absolute; width:100%; height:100%">
-	<img src="http://www.jchb.org/wp-content/uploads/jch-90th-header-new.jpg" height="300" width="1300">
-</div>
-    <marquee id="messages_id" behavior="scroll" direction="up" class="messages" style="height:500px;">
+<div class="wrapper">
+	<div id="over" Zstyle="position:absolute; width:100%; height:100%">
+		<img src="http://notna2000.pythonanywhere.com/html/j_banner_thin.png" height="200" Zwidth="1300">
+	</div>
+    <marquee id="messages_id" behavior="scroll" direction="up" class="messages" style="height:575px;">
 	</marquee>
+<div class="push"></div>
+</div>
+<div class="footer">
+    <div class="screen-footer text-center">
+        <h4>
+        Text your pledge to (201)500-1818 including your name.
+        </h4>
+    </div>
+</div>
     <script>
     var analytics = document.getElementById('messages_id');
     (function poll(){
@@ -34,7 +72,6 @@
             console.log('called');
             var divContent = "";
             var messagesArray = data.messages;
-            messagesArray.splice(0, 0, 'Send a text to (201)500-1818 and it\'ll appear here');
             var arrayLength = messagesArray.length;
 			for (var i = 0; i < arrayLength; i++) {
 				if (i % 2 == 0) {
