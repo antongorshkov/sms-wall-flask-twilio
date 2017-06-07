@@ -60,18 +60,20 @@
 </div>
 <div class="footer">
     <div class="screen-footer text-center">
-        <h4>
-        Text your pledge to (201)500-1818 including your name.
+        <h4 id="footer_msg">
+        Text your pledge to TO with your name, amount, and a short message.
         </h4>
     </div>
 </div>
     <script>
     var analytics = document.getElementById('messages_id');
+    var footer = document.getElementById('footer_msg');
     (function poll(){
         $.ajax({ url: "http://notna2000.pythonanywhere.com/messages", success: function(data){
             console.log('called');
             var divContent = "";
             var messagesArray = data.messages;
+            var totalRaised = data.total;
             var arrayLength = messagesArray.length;
 			for (var i = 0; i < arrayLength; i++) {
 				if (i % 2 == 0) {
