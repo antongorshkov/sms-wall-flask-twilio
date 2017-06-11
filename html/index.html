@@ -69,7 +69,7 @@
     var analytics = document.getElementById('messages_id');
     var footer = document.getElementById('footer_msg');
     (function poll(){
-        $.ajax({ url: "http://notna2000.pythonanywhere.com/messages", success: function(data){
+        $.ajax({ url: "/messages", success: function(data){
             console.log('called');
             var divContent = "";
             var messagesArray = data.messages;
