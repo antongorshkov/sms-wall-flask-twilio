@@ -4,10 +4,11 @@ from twilio.rest import Client
 from datetime import date
 from datetime import timedelta
 import json
+import os
 
 # Your Account SID from twilio.com/console
-account_sid = "<SECRET>"
-auth_token  = "<SECRET>"
+account_sid = os.environ["TWILIO_SID"]
+auth_token  = os.environ["TWILIO_TOKEN"]
 client = Client(account_sid, auth_token)
 
 # set the project root directory as the static folder, you can set others.
@@ -33,8 +34,8 @@ def get_subs():
 
 def send_message(msg):
     message = client.messages.create(
-        to="+FROM",
-        from_="+TO",
+        to="+16467338252",
+        from_="+12015001818",
         body=msg)
 
 @app.route('/')
