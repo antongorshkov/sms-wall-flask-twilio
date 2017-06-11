@@ -9,6 +9,9 @@ import os
 # Your Account SID from twilio.com/console
 account_sid = os.environ["TWILIO_SID"]
 auth_token  = os.environ["TWILIO_TOKEN"]
+to_num  = os.environ["DEFAULT_TO"]
+from_num  = os.environ["DEFAULT_FROM"]
+
 client = Client(account_sid, auth_token)
 
 # set the project root directory as the static folder, you can set others.
@@ -34,8 +37,8 @@ def get_subs():
 
 def send_message(msg):
     message = client.messages.create(
-        to="+16467338252",
-        from_="+12015001818",
+        to=to_num,
+        from_=from_num,
         body=msg)
 
 @app.route('/')
