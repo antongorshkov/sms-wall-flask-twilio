@@ -1,4 +1,4 @@
-from flask import Flask, request, send_from_directory, redirect, render_template, session, Response, jsonify
+from flask import Flask, request, send_from_directory, redirect, render_template, session, Response, jsonify, url_for
 from twilio.twiml.messaging_response import MessagingResponse, Message
 from twilio.rest import Client
 from datetime import date
@@ -13,6 +13,7 @@ to_num  = os.environ["DEFAULT_TO"]
 from_num  = os.environ["DEFAULT_FROM"]
 
 client = Client(account_sid, auth_token)
+comments = []
 
 # set the project root directory as the static folder, you can set others.
 app = Flask(__name__, static_url_path='')
@@ -45,9 +46,13 @@ def send_message(msg):
 def index():
     return redirect("/html/index.html", code=302)
 
-@app.route("/notna")
+@app.route("/notna", methods=["GET", "POST"])
 def notna():
-    return render_template("main_page.html")
+    if request.method == "GET":
+        return render_template("main_page.html", comments=comments)
+
+    comments.append(request.form["contents"])
+    return redirect(url_for('notna'))
 
 @app.route('/total')
 def total():
