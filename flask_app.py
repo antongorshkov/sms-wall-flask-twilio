@@ -15,8 +15,6 @@ from_num  = os.environ["DEFAULT_FROM"]
 
 client = Client(account_sid, auth_token)
 
-comments = []
-
 # set the project root directory as the static folder, you can set others.
 app = Flask(__name__, static_url_path='')
 app.config["DEBUG"] = True
@@ -70,9 +68,11 @@ def index():
 @app.route("/notna", methods=["GET", "POST"])
 def notna():
     if request.method == "GET":
-        return render_template("main_page.html", comments=comments)
+        return render_template("main_page.html", comments=Comment.query.all())
 
-    comments.append(request.form["contents"])
+    comment = Comment(content=request.form["contents"])
+    db.session.add(comment)
+    db.session.commit()
     return redirect(url_for('notna'))
 
 @app.route('/total')
