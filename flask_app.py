@@ -1,4 +1,5 @@
 from flask import Flask, request, send_from_directory, redirect, render_template, session, Response, jsonify, url_for
+from flask_sqlalchemy import SQLAlchemy
 from twilio.twiml.messaging_response import MessagingResponse, Message
 from twilio.rest import Client
 from datetime import date
@@ -13,10 +14,30 @@ to_num  = os.environ["DEFAULT_TO"]
 from_num  = os.environ["DEFAULT_FROM"]
 
 client = Client(account_sid, auth_token)
+
 comments = []
 
 # set the project root directory as the static folder, you can set others.
 app = Flask(__name__, static_url_path='')
+app.config["DEBUG"] = True
+
+SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostname}/{databasename}".format(
+    username=os.environ["MYSQL_USER"],
+    password=os.environ["MYSQL_PASS"],
+    hostname=os.environ["MYSQL_HOST"],
+    databasename="comments",
+)
+app.config["SQLALCHEMY_DATABASE_URI"] = SQLALCHEMY_DATABASE_URI
+app.config["SQLALCHEMY_POOL_RECYCLE"] = 299
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
+
+class Comment(db.Model):
+
+    __tablename__ = "comments"
+
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.String(4096))
 
 def hasNumbers(inputString):
     return any(char.isdigit() for char in inputString)
@@ -133,5 +154,4 @@ def hello_monkey():
     return str(resp)
 
 if __name__ == "__main__":
-    app.debug = True
     app.run(host='0.0.0.0',port=3001)
