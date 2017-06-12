@@ -45,6 +45,10 @@ def send_message(msg):
 def index():
     return redirect("/html/index.html", code=302)
 
+@app.route("/notna")
+def notna():
+    return render_template("main_page.html")
+
 @app.route('/total')
 def total():
     res = []
