@@ -23,7 +23,7 @@ SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostnam
     username=os.environ["MYSQL_USER"],
     password=os.environ["MYSQL_PASS"],
     hostname=os.environ["MYSQL_HOST"],
-    databasename="comments",
+    databasename="notna2000$comments",
 )
 app.config["SQLALCHEMY_DATABASE_URI"] = SQLALCHEMY_DATABASE_URI
 app.config["SQLALCHEMY_POOL_RECYCLE"] = 299
