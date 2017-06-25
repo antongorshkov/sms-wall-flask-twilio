@@ -150,7 +150,8 @@ def hello_monkey():
 #    if body.lower() == 'subscribe':
 #        response_text = "Thank you for subscribing, you'll be receiving updates throughout the event. Text STOP to unsubscribe."
     resp = MessagingResponse()
-    msg = Message().body(response_text).media("/html/jch-90th-header-new.jpg")
+    msg = Message().body(response_text)
+    #.media("/html/jch-90th-header-new.jpg")
     resp.append(msg)
     return str(resp)
 
