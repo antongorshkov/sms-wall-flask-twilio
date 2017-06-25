@@ -146,6 +146,7 @@ def hello_monkey():
     else:
         response_text = "Thank you for supporting the JCH on it's 90th Anniversary."
 
+    response_text = "Thanks for participating and attending my talk @ QCon New York!"
 #    if body.lower() == 'subscribe':
 #        response_text = "Thank you for subscribing, you'll be receiving updates throughout the event. Text STOP to unsubscribe."
     resp = MessagingResponse()
