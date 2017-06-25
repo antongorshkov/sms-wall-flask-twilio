@@ -47,6 +47,11 @@ def get_messages():
     all_messages = client.messages.list(date_sent=today) + client.messages.list(date_sent=tomorrow) + client.messages.list(date_sent=yesterday)
     return all_messages
 
+def delete_messages():
+    all_messages = get_messages()
+    for message in all_messages:
+        client.messages(message.sid).delete()
+
 def get_subs():
     res = []
     all_messages = get_messages()
@@ -106,6 +111,11 @@ def message_delete():
     sid = request.args.get('sid', '')
     client.messages(sid).delete()
     return 'OK'
+
+@app.route('/message_delete_all')
+def message_delete_all():
+    delete_messages()
+    return 'Deleted all Messages!'
 
 @app.route('/messages')
 def hello_world():
