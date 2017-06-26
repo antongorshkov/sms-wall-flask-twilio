@@ -4,6 +4,7 @@ from twilio.twiml.messaging_response import MessagingResponse, Message
 from twilio.rest import Client
 from datetime import date
 from datetime import timedelta
+from collections import Counter
 import json
 import os
 
@@ -129,7 +130,7 @@ def hello_world():
             res.append(message.body)
             tot_res.append(sum([int(s) for s in message.body.split() if s.isdigit()]))
 
-    msg = {'messages': res, 'total': sum(tot_res) }
+    msg = {'messages': res, 'total': sum(tot_res), 'count': Counter(res) }
     return jsonify(msg)
 
 @app.route('/subs')
