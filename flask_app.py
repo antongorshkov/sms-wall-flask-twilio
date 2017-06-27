@@ -94,9 +94,12 @@ def total():
 @app.route('/messages_details')
 def messages_details():
     res = []
+    bodies = []
+    cnt_res = []
     all_messages = get_messages()
     for message in all_messages:
         if message.direction == 'inbound':
+            bodies.append(message.body)
             o = {   'sid': message.sid,
                     'body': message.body,
                     'from_': message.from_,
@@ -104,7 +107,14 @@ def messages_details():
             };
             res.append(o)
 
-    msg = {'messages': res }
+    cnt = dict(Counter(bodies))
+    for key, value in cnt.items():
+        o = {
+            'text' : key,
+            'count': value
+        }
+        cnt_res.append(o)
+    msg = {'messages': res, 'count': cnt_res }
     return jsonify(msg)
 
 @app.route('/message_delete')
