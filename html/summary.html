@@ -1,0 +1,78 @@
+<html>
+<head>
+<style type="text/css">
+	@import url('https://fonts.googleapis.com/css?family=Asap');
+
+	html, body {
+	    height: 100%;
+	}
+	.wrapper {
+	    min-height: 100%;
+	    height: auto !important;
+	    height: 100%;
+	    margin: 0 auto -142px; /* the bottom margin is the negative value of the footer's height */
+	}
+	.footer, .push {
+	    height: 142px; /* .push must be the same height as .footer */
+	}
+
+	.messages {
+		ZZborder: 1px solid lightgrey;
+		margin-bottom: 5px;
+		overflow-y: scroll;
+		padding: 5px;
+		text-align: center;
+		font-size: 25pt;
+		font-family: 'Asap', sans-serif;
+	}
+
+	.screen-footer h4{
+		font-family: 'Asap', sans-serif;
+		background: #2575BB;
+		color: #FFFFFF;
+		padding-top:25px;
+		padding-bottom: 25px;
+		font-size:32px;
+		padding-left:30px;
+		padding-right: 30px;
+		line-height: 1.5;
+		text-align: center;
+		margin: 0;
+	}
+
+	#over img {
+		margin-left: auto;
+		margin-right: auto;
+		display: block;
+	}
+</style>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body style="background-color:#F2F2F2">
+
+<a href="/message_delete_all" target="_blank">Delete All</a>
+<table>
+    <tr>
+        <th>Message</th>
+        <th>Count</th>
+    </tr>
+</table>
+
+    <script>
+    //var table = document.getElementById('messages_id');
+    (function poll(){
+        $.ajax({ url: "/messages_details", success: function(data){
+        var json_count = data.count;
+		var tr;
+        for (var i = 0; i < json_count.length; i++) {
+            tr = $('<tr/>');
+            tr.append("<td>" + json_count[i].text + "</td>");
+            tr.append("<td>" + json_count[i].count + "</td>");
+            $('table').append(tr);
+        };
+        }, dataType: "json", complete: setTimeout(poll,3000000), timeout: 30000 });
+    })();
+    </script>
+</body>
+</html>
+
