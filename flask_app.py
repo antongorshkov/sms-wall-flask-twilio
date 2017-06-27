@@ -107,13 +107,7 @@ def messages_details():
             };
             res.append(o)
 
-    cnt = dict(Counter(bodies))
-    for key, value in cnt.items():
-        o = {
-            'text' : key,
-            'count': value
-        }
-        cnt_res.append(o)
+    cnt_res = [{'text': w[0], 'count': w[1]} for w in Counter(bodies).most_common()]
     msg = {'messages': res, 'count': cnt_res }
     return jsonify(msg)
 
