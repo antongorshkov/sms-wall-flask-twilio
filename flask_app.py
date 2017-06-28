@@ -81,6 +81,17 @@ def notna():
     db.session.commit()
     return redirect(url_for('notna'))
 
+@app.route("/conversation", methods=["GET", "POST"])
+def conversation():
+    if request.method == "GET":
+        from_ = request.args.get('from_', '')
+        return render_template("conversation.html", texts=client.messages.list(to=from_) + client.messages.list(from_=from_), from_=from_)
+
+    from_ = request.form["from_"]
+    client.messages.create(to=from_,from_=from_num,body=request.form["contents"])
+    return redirect(url_for('conversation',from_=from_))
+
+
 @app.route('/total')
 def total():
     res = []
