@@ -58,6 +58,7 @@
         <th>DateSent</th>
         <th>From</th>
         <th>Delete</th>
+        <th>Conversation</th>
     </tr>
 </table>
 
@@ -74,6 +75,7 @@
             tr.append("<td>" + json[i].from_ + "</td>");
             //tr.append("<td>" + json[i].sid + "</td>");
             tr.append("<td><a href=/message_delete?sid=" + json[i].sid + " target=\"_blank\">Delete</a></td>");
+            tr.append("<td><a href=/conversation?from_=" + json[i].from_ + " target=\"_blank\">Conversation</a></td>");
             $('table').append(tr);
         }
         }, dataType: "json", complete: setTimeout(poll,3000000), timeout: 30000 });
