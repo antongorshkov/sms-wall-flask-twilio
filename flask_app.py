@@ -79,6 +79,18 @@ def send_message(msg):
         from_=from_num,
         body=msg)
 
+'''Files to watch in order to restart webserver when they change for local dev'''
+def get_files_to_watch():
+    extra_dirs = ['./templates',]
+    extra_files = extra_dirs[:]
+    for extra_dir in extra_dirs:
+        for dirname, dirs, files in os.walk(extra_dir):
+            for filename in files:
+                filename = os.path.join(dirname, filename)
+                if os.path.isfile(filename):
+                    extra_files.append(filename)
+    return extra_files
+
 @app.route('/')
 def index():
     return redirect("/html/index.html", code=302)
@@ -194,4 +206,4 @@ def hello_monkey():
     return str(resp)
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0',port=3001)
+    app.run(host='0.0.0.0',port=3001,extra_files=get_files_to_watch())
