@@ -212,7 +212,8 @@ def hello_monkey():
     # msg = Message().body(response_text)
     # #.media("/html/jch-90th-header-new.jpg")
     # resp.append(msg)
-    return str(resp)
+    # return str(resp)
+    return 'OK'
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0',port=3001,extra_files=get_files_to_watch())
