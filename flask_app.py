@@ -18,6 +18,13 @@ client = Client(account_sid, auth_token)
 
 # set the project root directory as the static folder, you can set others.
 app = Flask(__name__, static_url_path='')
+
+@app.template_filter()
+def datetimefilter(value, format='%Y/%m/%d %H:%M'):
+    return value.strftime(format)
+
+app.jinja_env.filters['datetimefilter'] = datetimefilter
+
 app.config["DEBUG"] = True
 
 SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostname}/{databasename}".format(
