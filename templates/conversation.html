@@ -26,9 +26,19 @@
 
 <div class="container">
         {% for sms in texts %}
-            <div class="row">
-                {{ sms.body }}
+          {% if sms.direction == 'inbound' %}
+            <div class="row" style="color: red">
+          {% else %}
+            <div class="row" style="color: green">
+          {% endif %}
+            {{ sms.body }}
             </div>
+
+            <!-- <div class="row">
+                {{ sms.date_sent }}
+            </div> -->
+
+
         {% endfor %}
 
         <div class="row">
