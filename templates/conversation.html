@@ -31,16 +31,10 @@
           {% else %}
             <div class="row" style="color: green">
           {% endif %}
+            {{ sms.date_sent|datetimefilter  }}
             {{ sms.body }}
             </div>
-
-            <!-- <div class="row">
-                {{ sms.date_sent }}
-            </div> -->
-
-
         {% endfor %}
-
         <div class="row">
             <form action="/conversation" method="POST">
                 <textarea class="form-control" name="contents" placeholder="Enter a response"></textarea>
