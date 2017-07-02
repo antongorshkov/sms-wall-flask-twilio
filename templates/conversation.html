@@ -27,10 +27,10 @@
 
 <div class="container">
         <div class="row">
-            <form action="/conversation" method="POST">
-                <textarea class="form-control" name="contents" placeholder="Enter a response"></textarea>
-                <input type="hidden" name="from_" value="{{ from_ }}">
-                <input type="submit" value="Send">
+            <form id="MsgForm" action="/conversation" method="POST">
+                <textarea class="form-control" id="contents" name="contents" placeholder="Enter a response"></textarea>
+                <input type="hidden" id="from_" name="from_" value="{{ from_ }}">
+                <input type="submit" id="submitButton" value="Send">
             </form>
         </div>
         <div id="conversation_content"></div>
@@ -48,6 +48,18 @@
             timeout: 30000
         });
     })();
+
+    $("#MsgForm").submit(function(event) {
+      event.preventDefault();
+      /* get the action attribute from the <form action=""> element */
+      var $form = $( this ),
+          url = $form.attr( 'action' );
+
+      var posting = $.post( url, { from_: $('#from_').val(), contents: $('#contents').val() } );
+      posting.done(function( data ) {
+        $('#conversation_content').html(data);
+      });
+    });
     </script>
 
     </body>
