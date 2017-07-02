@@ -48,6 +48,11 @@ def get_messages():
     all_messages = client.messages.list(date_sent=today) + client.messages.list(date_sent=tomorrow) + client.messages.list(date_sent=yesterday)
     return all_messages
 
+def get_conversation(num):
+    conv = client.messages.list(to=num) + client.messages.list(from_=num)
+    conv.sort(key=lambda x: x.date_sent, reverse=True)
+    return conv
+
 def delete_messages():
     all_messages = get_messages()
     for message in all_messages:
@@ -85,7 +90,7 @@ def notna():
 def conversation():
     if request.method == "GET":
         from_ = request.args.get('from_', '')
-        return render_template("conversation.html", texts=client.messages.list(to=from_) + client.messages.list(from_=from_), from_=from_)
+        return render_template("conversation.html", texts=get_conversation(from_), from_=from_)
 
     from_ = request.form["from_"]
     client.messages.create(to=from_,from_=from_num,body=request.form["contents"])
