@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <title>Conversation</title>
     </head>
 
@@ -18,7 +19,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Conversation with {{ from_ }}</a>
+      <a class="navbar-brand" href="#">Conversation with {{from_}}</a>
     </div>
   </div>
 </nav>
@@ -32,17 +33,22 @@
                 <input type="submit" value="Send">
             </form>
         </div>
+        <div id="conversation_content"></div>
+</div>
 
-        {% for sms in texts %}
-          {% if sms.direction == 'inbound' %}
-            <div class="row" style="color: red">
-          {% else %}
-            <div class="row" style="color: green">
-          {% endif %}
-            {{ sms.date_sent|datetimefilter  }}
-            {{ sms.body }}
-            </div>
-        {% endfor %}
-</div><!-- /.container -->
+     <script>
+    (function poll(){
+        $.ajax({ 
+            url: "/conversation_content",
+            data: { from_: "{{from_}}" }, 
+            success: function(data){
+                $('#conversation_content').html(data);
+            }, 
+            complete: setTimeout(poll,3000), 
+            timeout: 30000
+        });
+    })();
+    </script>
+
     </body>
 </html>
