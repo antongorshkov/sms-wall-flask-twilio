@@ -1,0 +1,10 @@
+{% for sms in texts %}
+  {% if sms.direction == 'inbound' %}
+    <div class="row" style="color: red">
+  {% else %}
+    <div class="row" style="color: green">
+  {% endif %}
+    {{ sms.date_sent|datetimefilter  }}
+    {{ sms.body }}
+    </div>
+{% endfor %}
