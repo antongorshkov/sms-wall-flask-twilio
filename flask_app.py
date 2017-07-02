@@ -113,7 +113,7 @@ def conversation():
 
     from_ = request.form["from_"]
     client.messages.create(to=from_,from_=from_num,body=request.form["contents"])
-    return redirect(url_for('conversation',from_=from_))
+    return render_template("conversation_content.html", texts=get_conversation(from_), from_=from_.strip())
 
 
 @app.route("/conversation_content", methods=["GET"])
@@ -196,7 +196,8 @@ def send_html(path):
 def hello_monkey():
     from_number = request.values.get('From', None)
     body = request.values.get('Body', None)
-    send_message(str(from_number)+':'+body)
+    #Uncomment to echo the messages to some number
+    #send_message(str(from_number)+':'+body)
     if hasNumbers(body):
         response_text = "Thank you for supporting the JCH on it's 90th Anniversary. You can complete your pledge here: http://www.jchb.org/donate/#online or a staff will contact you to fulfill your pledge"
     else:
@@ -205,10 +206,12 @@ def hello_monkey():
     response_text = "Thanks for participating and attending my talk @ QCon New York!"
 #    if body.lower() == 'subscribe':
 #        response_text = "Thank you for subscribing, you'll be receiving updates throughout the event. Text STOP to unsubscribe."
-    resp = MessagingResponse()
-    msg = Message().body(response_text)
-    #.media("/html/jch-90th-header-new.jpg")
-    resp.append(msg)
+    
+    #Uncomment to send responses back to user.
+    # resp = MessagingResponse()
+    # msg = Message().body(response_text)
+    # #.media("/html/jch-90th-header-new.jpg")
+    # resp.append(msg)
     return str(resp)
 
 if __name__ == "__main__":
