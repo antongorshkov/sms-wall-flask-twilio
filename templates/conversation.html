@@ -25,6 +25,14 @@
 
 
 <div class="container">
+        <div class="row">
+            <form action="/conversation" method="POST">
+                <textarea class="form-control" name="contents" placeholder="Enter a response"></textarea>
+                <input type="hidden" name="from_" value="{{ from_ }}">
+                <input type="submit" value="Send">
+            </form>
+        </div>
+
         {% for sms in texts %}
           {% if sms.direction == 'inbound' %}
             <div class="row" style="color: red">
@@ -35,13 +43,6 @@
             {{ sms.body }}
             </div>
         {% endfor %}
-        <div class="row">
-            <form action="/conversation" method="POST">
-                <textarea class="form-control" name="contents" placeholder="Enter a response"></textarea>
-                <input type="hidden" name="from_" value="{{ from_ }}">
-                <input type="submit" value="Send">
-            </form>
-        </div>
 </div><!-- /.container -->
     </body>
 </html>
